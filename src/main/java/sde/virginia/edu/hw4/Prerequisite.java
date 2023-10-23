@@ -82,13 +82,14 @@ public class Prerequisite {
         for (Course course: requiredCourses.keySet()) {
             var minimumGrade = requiredCourses.get(course);
             var optionalTranscriptGrade = student.getBestGrade(course);
-            if (optionalTranscriptGrade.isEmpty()) {
-                return false;
+            if (student.isEnrolledInCourse(course)) {
+                return true;
             }
             var transcriptGrade = optionalTranscriptGrade.get();
             if (!transcriptGrade.greaterThanOrEqualTo(minimumGrade)) {
                 return false;
             }
+
         }
         return true;
     }
