@@ -105,7 +105,7 @@ class PrerequisiteTest {
     @Test
     void isMetBy_false_missingClass() {
         var student = mock(Student.class);
-        when(student.getBestGrade(dmt1)).thenReturn(Optional.empty());
+        lenient().when(student.getBestGrade(dmt1)).thenReturn(Optional.empty());
         lenient().when(student.getBestGrade(dsa1)).thenReturn(Optional.of(Grade.A));
 
         requiredCourses = Map.of(dsa1, Grade.C_MINUS, dmt1, Grade.C_MINUS);
@@ -113,4 +113,15 @@ class PrerequisiteTest {
 
         assertFalse(prerequisite.isSatisfiedBy(student));
     }
+
+    @Test
+    void isCurrentlyEnrolled_meetsPreReq_true() {
+        var student = mock(Student.class);
+        requiredCourses = Map.of(dsa1, Grade.C_MINUS);
+        prerequisite = new Prerequisite(requiredCourses);
+
+        when(student.isEnrolledInCourse(dsa1)).thenReturn(true);
+        assertTrue(prerequisite.isSatisfiedBy(student));
+    }
+
 }
