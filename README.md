@@ -2,12 +2,17 @@
 
 ## Authors
 1) Hako Iino, anb7zp, [hakoiino]
-2) Name, netid, [GitHub profile name]
-3) Name, netid, [GitHub profile name]
+2) Connolly Woo, egs6nf, [connolly-woo]
+3) Noah Cook, syr4gv, [GitHub profile name]
 
 ## To Run
 
-[Add a brief description of how to build and run your .jar file based on this code]
+Run the following commands in terminal:
+./gradlew build /n
+cd build /n
+cd libs /n
+-java jar Course Registration.jar /n
+
 
 ## Contributions
 
@@ -15,16 +20,15 @@ List the primary contributions of each author. It is recommended to update this 
 
 ### [Hako Iino]
 
-- completed part 2
-- UML diagram
+* completed & tested part 2
+* UML diagram
 
-### [Author 2 - replace this with their name]
+### [Connolly Woo]
 
-* Author 2 contributions
-* as a bulleted list
-* each line starts with an asterisk and a space
+* Completed part 1
+* Answered question 2
 
-### [Author 3 - replace this with their name]
+### [Noah Cook]
 
 * Author 3 contributions
 * as a bulleted list
