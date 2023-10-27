@@ -69,8 +69,41 @@ public class RegistrationService {
      * @see Student#getCreditLimit() 
      */
     public RegistrationResult register(Student student, Section section) {
-        return null;
-        //TODO: implement and test
+        if(student.isEnrolledInSection(section) || student.isWaitListedInSection(section)){
+            return RegistrationResult.FAILED_ALREADY_IN_COURSE;
+        }
+        else if(!section.isEnrollmentOpen()){
+            return RegistrationResult.FAILED_ENROLLMENT_CLOSED;
+        }
+        else if(section.isEnrollmentFull() && section.isWaitListFull()){
+            return RegistrationResult.FAILED_SECTION_FULL;
+        }
+        else{
+            for(Section s : student.getEnrolledSections()){
+                if(section.getTimeSlot().overlapsWith(s.getTimeSlot())){
+                    return RegistrationResult.FAILED_SCHEDULE_CONFLICT;
+                }
+            }
+        }
+        if(!section.getCourse().getPrerequisite().isSatisfiedBy(student)){
+            return RegistrationResult.FAILED_PREREQUISITE_NOT_MET;
+        }
+        int credits = 0;
+        for(Section s : student.getTranscriptSections()){
+            credits += s.getCourse().getCreditHours();
+        }
+        if(credits + section.getCourse().getCreditHours() > student.getCreditLimit()){
+            return RegistrationResult.FAILED_CREDIT_LIMIT_VIOLATION;
+        }
+        if(!section.isEnrollmentFull()){
+            section.addStudentToEnrollment(student);
+            return RegistrationResult.SUCCESS_ENROLLED;
+        }
+        else{
+            section.addStudentToWaitList(student);
+            return RegistrationResult.SUCCESS_ENROLLED;
+        }
+
     }
 
     /**
@@ -101,7 +134,29 @@ public class RegistrationService {
      * @see Student#removeWaitListedSection(Section)
      */
     public boolean drop(Student student, Section section) {
-        return false;
-        //TODO: implement and test
+        if(!section.isStudentEnrolled(student) && !section.isStudentWaitListed(student)){
+            return false;
+        }
+        else{
+            if(section.isStudentWaitListed(student)){
+                section.removeStudentFromWaitList(student);
+                student.removeWaitListedSection(section);
+                student.addGrade(section, Grade.DROP);
+                return true;
+            }
+            else{
+                section.removeStudentFromEnrolled(student);
+                if(section.isEnrollmentOpen() && section.getWaitListSize() > 0) {
+                    section.addStudentToEnrollment(section.getFirstStudentOnWaitList());
+                    section.getFirstStudentOnWaitList().removeWaitListedSection(section);
+                    section.getFirstStudentOnWaitList().addEnrolledSection(section);
+                    section.removeStudentFromWaitList(section.getFirstStudentOnWaitList());
+                }
+                student.addGrade(section, Grade.DROP);
+                student.removeEnrolledSection(section);
+                return true;
+            }
+        }
+
     }
 }
