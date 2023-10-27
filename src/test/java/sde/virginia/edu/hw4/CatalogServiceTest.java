@@ -13,4 +13,17 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class CatalogServiceTest {
 
+    @Mock
+    Catalog catalog;
+    @Mock
+    Section section;
+
+
+    @Test
+    void addSectionAlreadyEnrolled(){
+
+    }
+
+
+    
 }

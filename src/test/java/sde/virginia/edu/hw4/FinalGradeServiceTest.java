@@ -31,7 +31,11 @@ public class FinalGradeServiceTest {
 
     }
     @Test
-    void uploadFinalGradeF(){
+    void uploadFinalGradeFs(){
+
+    }
+    @Test
+    void uploadFinalGradeStudentNotEnrolled(){
 
     }
 
