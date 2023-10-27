@@ -83,8 +83,30 @@ public class CatalogService {
      * @see Section#getWaitListSize()
      */
     public AddSectionResult add(Section section) {
-        return null;
-        //TODO: implement and test
+        if(catalog.contains(section)){
+            return AddSectionResult.FAILED_SECTION_ALREADY_EXISTS;
+        }
+        else if(!section.getSemester().equals(catalog.getSemester())){
+            return AddSectionResult.FAILED_SEMESTER_MISMATCH;
+        }
+        else if(!catalog.getSectionByCRN(section.getCourseRegistrationNumber()).equals(Optional.empty())){
+            return AddSectionResult.FAILED_CRN_CONFLICT;
+        }
+        else{
+            for(Section s : catalog.getSections()){
+                if(section.getLocation().equals(s.getLocation()) && section.getTimeSlot().equals(s.getTimeSlot())){
+                    return AddSectionResult.FAILED_LOCATION_CONFLICT;
+                }
+                else if(section.getTimeSlot().equals(s.getTimeSlot()) && section.getLecturer().equals(s.getLecturer())){
+                    return AddSectionResult.FAILED_LECTURER_CONFLICT;
+                }
+            }
+        }
+        if(section.getEnrollmentSize() != 0 || section.getWaitListSize() != 0){
+            return AddSectionResult.FAILED_ENROLLMENT_NOT_EMPTY;
+        }
+        catalog.add(section);
+        return AddSectionResult.SUCCESSFUL;
     }
 
 
@@ -101,7 +123,7 @@ public class CatalogService {
      * @see Student#removeWaitListedSection(Section)
      */
     public void removeSection(Section section) {
-        //TODO: implement and test
+        catalog.remove(section);
     }
 
 
@@ -111,6 +133,8 @@ public class CatalogService {
      * @see EnrollmentStatus
      */
     public void closeAllSection() {
-        //TODO: implement and test
+        for(Section s : catalog.getSections()){
+            s.setEnrollmentStatus(EnrollmentStatus.CLOSED);
+        }
     }
 }
