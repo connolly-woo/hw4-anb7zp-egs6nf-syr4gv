@@ -3,7 +3,7 @@
 ## Authors
 1) Hako Iino, anb7zp, [hakoiino]
 2) Connolly Woo, egs6nf, [connolly-woo]
-3) Noah Cook, syr4gv, [GitHub profile name]
+3) Noah Cook, syr4gv, [ncook77]
 
 ## To Run
 
@@ -30,9 +30,7 @@ List the primary contributions of each author. It is recommended to update this 
 
 ### [Noah Cook]
 
-* Author 3 contributions
-* as a bulleted list
-* each line starts with an asterisk and a space
+* Implemented parts 3,4, and 5
 
 ## Issues
 
