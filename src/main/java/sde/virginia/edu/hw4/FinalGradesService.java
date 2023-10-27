@@ -19,6 +19,9 @@ public class FinalGradesService {
      */
     public void uploadFinalGrades(Section section, Map<Student, Grade> finalGrades) {
         for(Student s : finalGrades.keySet()){
+            if(!section.isStudentEnrolled(s)){
+                throw new IllegalArgumentException("Student is not enrolled in class");
+            }
             s.addGrade(section, finalGrades.get(s));
         }
     }
