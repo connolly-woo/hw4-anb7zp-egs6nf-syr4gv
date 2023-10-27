@@ -8,10 +8,10 @@
 ## To Run
 
 Run the following commands in terminal:
-./gradlew build /n
-cd build /n
-cd libs /n
--java jar Course Registration.jar /n
+./gradlew build <br>
+cd build <br>
+cd libs <br>
+-java jar Course Registration.jar <br>
 
 
 ## Contributions
