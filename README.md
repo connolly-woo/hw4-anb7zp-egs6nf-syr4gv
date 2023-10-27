@@ -16,6 +16,7 @@ List the primary contributions of each author. It is recommended to update this 
 ### [Hako Iino]
 
 - completed part 2
+- UML diagram
 
 ### [Author 2 - replace this with their name]
 
