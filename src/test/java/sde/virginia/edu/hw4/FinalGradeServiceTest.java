@@ -6,6 +6,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Map;
+import java.util.Set;
 
 
 
@@ -18,24 +19,19 @@ public class FinalGradeServiceTest {
     Section section;
     @Mock
     Map<Student, Grade> finalGrades;
+    @Mock
+    Student student, student1;
+    @Mock
+    Grade grade;
 
 
 
-    @Test
-    void uploadFinalGradeA(){
-
-    }
-
-    @Test
-    void uploadFinalGradeDrop(){
-
-    }
-    @Test
-    void uploadFinalGradeFs(){
-
-    }
     @Test
     void uploadFinalGradeStudentNotEnrolled(){
+        when(section.isStudentEnrolled(student)).thenReturn(false);
+        FinalGradesService FGS = new FinalGradesService();
+
+        assertThrows(IllegalArgumentException.class, () -> FGS.uploadFinalGrades(section, finalGrades));
 
     }
 

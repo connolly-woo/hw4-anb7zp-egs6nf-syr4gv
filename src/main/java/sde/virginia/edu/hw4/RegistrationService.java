@@ -89,7 +89,7 @@ public class RegistrationService {
             return RegistrationResult.FAILED_PREREQUISITE_NOT_MET;
         }
         int credits = 0;
-        for(Section s : student.getTranscriptSections()){
+        for(Section s : student.getEnrolledSections()){
             credits += s.getCourse().getCreditHours();
         }
         if(credits + section.getCourse().getCreditHours() > student.getCreditLimit()){
