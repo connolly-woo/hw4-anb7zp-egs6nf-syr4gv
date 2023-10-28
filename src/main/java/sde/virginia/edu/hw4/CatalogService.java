@@ -89,19 +89,22 @@ public class CatalogService {
         else if(!section.getSemester().equals(catalog.getSemester())){
             return AddSectionResult.FAILED_SEMESTER_MISMATCH;
         }
-        else if(!catalog.getSectionByCRN(section.getCourseRegistrationNumber()).equals(Optional.empty())){
-            return AddSectionResult.FAILED_CRN_CONFLICT;
-        }
-        else{
-            for(Section s : catalog.getSections()){
-                if(section.getLocation().equals(s.getLocation()) && section.getTimeSlot().equals(s.getTimeSlot())){
-                    return AddSectionResult.FAILED_LOCATION_CONFLICT;
-                }
-                else if(section.getTimeSlot().equals(s.getTimeSlot()) && section.getLecturer().equals(s.getLecturer())){
-                    return AddSectionResult.FAILED_LECTURER_CONFLICT;
-                }
+
+        for(Section s : catalog.getSections()){
+            if(s.getCourseRegistrationNumber() == section.getCourseRegistrationNumber()){
+                return AddSectionResult.FAILED_CRN_CONFLICT;
             }
         }
+
+        for(Section s : catalog.getSections()){
+            if(section.getLocation().equals(s.getLocation()) && section.getTimeSlot().equals(s.getTimeSlot())){
+                    return AddSectionResult.FAILED_LOCATION_CONFLICT;
+            }
+            else if(section.getTimeSlot().equals(s.getTimeSlot()) && section.getLecturer().equals(s.getLecturer())){
+                return AddSectionResult.FAILED_LECTURER_CONFLICT;
+            }
+            }
+
         if(section.getEnrollmentSize() != 0 || section.getWaitListSize() != 0){
             return AddSectionResult.FAILED_ENROLLMENT_NOT_EMPTY;
         }

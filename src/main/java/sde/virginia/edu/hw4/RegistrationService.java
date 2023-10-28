@@ -97,11 +97,13 @@ public class RegistrationService {
         }
         if(!section.isEnrollmentFull()){
             section.addStudentToEnrollment(student);
+            student.addEnrolledSection(section);
             return RegistrationResult.SUCCESS_ENROLLED;
         }
         else{
             section.addStudentToWaitList(student);
-            return RegistrationResult.SUCCESS_ENROLLED;
+            student.addWaitListedSection(section);
+            return RegistrationResult.SUCCESS_WAIT_LISTED;
         }
 
     }
